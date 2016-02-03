@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="PYTHON_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/xcat_app" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="Jython 2.7.0 (/usr/local/Cellar/jython/2.7.0/bin/jython)" jdkType="Python SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
