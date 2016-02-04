@@ -1,30 +1,24 @@
+# specify python as the language
 language: python
+sudo: required
 
+# python versions to be used for testing
 python:
-  - '2.6'
-  - '2.7'
+  - "2.7"
 
-# env:
-#   matrix:
-#     - FOO=foo
-#     - BAR=bar
+env:
+  - JYTHON=true
+  - JYTHON=false
 
 matrix:
-  include:
+  exclude:
     - python: 2.7
-      env: JYTHON=org.python:jython-installer:2.7.0
-      # env: JYTHON=org.python:jython-installer:2.5.3 FOO=foo
+      env: JYTHON=true
 
-before_install:
-  - if [ -n "$JYTHON" ]; then ./travis/before_install_jython.sh; source $HOME/myvirtualenv/bin/activate ;fi
-  - if [ -n "$JYTHON" ]; then pip install jip==0.7; fi
-  - if [ -n "$JYTHON" ]; then jip install joda-time:joda-time:2.3; fi
-  - if [ -n "$JYTHON" ]; then export CLASSPATH=$VIRTUAL_ENV/javalib/*; fi
-  - pip install unittest2
+before_install: if [ "$JYTHON" == "true" ]; then sudo apt-get install jython; fi
 
-# install:
-#   - pip install -e .
+before_script: if [ "$JYTHON" == "true" ]; then export PYTHON_EXE=jython; jython -c "print ''"; else export PYTHON_EXE=python; fi
 
 script:
-  - python setup.py develop
-  - xcat_example_application --test
+  - $PYTHON_EXE setup.py develop
+  - xcat_app --test
