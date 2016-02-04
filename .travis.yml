@@ -1,0 +1,30 @@
+language: python
+
+python:
+  - '2.6'
+  - '2.7'
+
+# env:
+#   matrix:
+#     - FOO=foo
+#     - BAR=bar
+
+matrix:
+  include:
+    - python: 2.7
+      env: JYTHON=org.python:jython-installer:2.7.0
+      # env: JYTHON=org.python:jython-installer:2.5.3 FOO=foo
+
+before_install:
+  - if [ -n "$JYTHON" ]; then ./travis/before_install_jython.sh; source $HOME/myvirtualenv/bin/activate ;fi
+  - if [ -n "$JYTHON" ]; then pip install jip==0.7; fi
+  - if [ -n "$JYTHON" ]; then jip install joda-time:joda-time:2.3; fi
+  - if [ -n "$JYTHON" ]; then export CLASSPATH=$VIRTUAL_ENV/javalib/*; fi
+  - pip install unittest2
+
+# install:
+#   - pip install -e .
+
+script:
+  - python setup.py develop
+  - xcat_example_application --test
