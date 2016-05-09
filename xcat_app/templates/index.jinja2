@@ -1,6 +1,6 @@
 <html>
 <body>
-Search Books:
+<a href="/">Search Books:</a>
 <form action='/' method='GET'>
     <input type='text' name='title' size=50 value="{{ query }}">
     <select name="type">
@@ -21,7 +21,7 @@ Search Books:
     <strong><a href="{{ url_for('rental', id=item.id) }}">{{ item.title }}</a></strong>
     <br/>
     {% for key, value in item.items() %}
-        {% if key != "title" %}
+        {% if key not in ("title", "img", "id") %}
             {{ key }}: {{ value }}
         {% endif %}
     {% endfor %}

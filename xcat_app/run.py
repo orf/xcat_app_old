@@ -5,4 +5,4 @@ if "--test" in sys.argv:
     sys.exit(1)
 
 if __name__ == "__main__":
-    app.run(debug=False, host="localhost", threaded=False)
+    app.run(debug=False, host="localhost", threaded=False, port=8080)

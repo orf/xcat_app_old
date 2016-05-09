@@ -28,7 +28,6 @@ if IS_JYTHON:
     from net.sf.saxon.s9api import *
     from org.xml.sax import InputSource
     from javax.xml.transform.sax import SAXSource
-    from java.lang import System
     from net.sf.saxon.xpath import *
 
 
@@ -102,20 +101,25 @@ def getChildren(node):
 
 
 def run_xpath1_query_jython(query):
-    xpf = XPathFactoryImpl()
-    xpe = xpf.newXPath()
+    return run_xpath2_query_jython(query)  # Haven't
 
 
 def run_xpath2_query_jython(query):
+    t1 = time.time()
     xpf = XPathFactoryImpl()
     xpe = xpf.newXPath()
 
     input_s = InputSource(str(library))
     sax_source = SAXSource(input_s)
-    doc = xpe.setSource(sax_source)
+    config = xpf.getConfiguration()
+
+    doc = config.buildDocument(sax_source)
 
     expression = xpe.compile(query)
     results = expression.evaluate(doc, XPathConstants.NODESET)
+    return [
+        parse_item_java(r) for r in results
+    ], time.time() - t1, ""
 
 
 def run_xpath1_query_blunt(query):
@@ -166,4 +170,16 @@ def parse_item(result):
         child.tag: child.text for child in children
         }
     returner["id"] = result.attrib["id"]
+    return returner
+
+
+def parse_item_java(result):
+    children = result.iterateAxis(Axis.CHILD.axisNumber)
+    returner = {}
+    while children.hasNext():
+        child = children.next()
+        if child.displayName:
+            returner[child.displayName] = child.getStringValue()
+
+    returner["id"] = result.getAttributeValue("", "id")
     return returner

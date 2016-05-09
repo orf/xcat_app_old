@@ -7,18 +7,21 @@
                 <author>Dan Brown</author>
                 <description>A book</description>
                 <rent_days>10</rent_days>
+                <img>http://www.sonypictures.com/movies/thedavincicode/assets/images/onesheet.jpg</img>
             </book>
             <book id="2">
                 <title>Game of Thrones</title>
                 <author>George RR Martin</author>
                 <description>Sweet book</description>
                 <rent_days>5</rent_days>
+                <img>http://ecx.images-amazon.com/images/I/919-FLL37TL.jpg</img>
             </book>
             <book id="3">
-                <title>Foundation</title>
+                <title>Foundation and Empire</title>
                 <author>Issac Asimov</author>
                 <description>Space stuff</description>
                 <rent_days>5</rent_days>
+                <img>https://upload.wikimedia.org/wikipedia/en/8/8a/Prelude_to_Foundation_cover.jpg</img>
             </book>
         </books>
 
