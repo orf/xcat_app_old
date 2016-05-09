@@ -30,7 +30,6 @@ if IS_JYTHON:
     from javax.xml.transform.sax import SAXSource
     from net.sf.saxon.xpath import *
 
-
 if XPATH_1:
     print("Using XPath 1.0")
 else:
@@ -77,7 +76,7 @@ def run_xpath_query(query):
         True: run_xpath1_query_jython if IS_JYTHON else run_xpath1_query_blunt,
         False: run_xpath2_query_jython if IS_JYTHON else run_xpath2_query_blunt
     }
-
+    print(query)
     results, run_time, error = functions[XPATH_1](query)
 
     if error:
@@ -118,8 +117,8 @@ def run_xpath2_query_jython(query):
     expression = xpe.compile(query)
     results = expression.evaluate(doc, XPathConstants.NODESET)
     return [
-        parse_item_java(r) for r in results
-    ], time.time() - t1, ""
+               parse_item_java(r) for r in results
+               ], time.time() - t1, ""
 
 
 def run_xpath1_query_blunt(query):
